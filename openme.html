@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffdde1;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #fff;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem;
+            color: #ff6f91;
+            margin: 0;
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin: 20px 0;
+            color: #ff6f61;
+        }
+
+        .button-container {
+            margin-top: 30px;
+        }
+
+        .btn {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border: none;
+            background: #ff6f91;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #ff4a70;
+        }
+
+        .hidden-message {
+            display: none;
+            margin-top: 30px;
+            font-size: 1.8rem;
+            animation: fadeIn 2s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .heart {
+            width: 20px;
+            height: 20px;
+            background-color: #ff6f91;
+            position: absolute;
+            transform: rotate(-45deg);
+            animation: float 5s ease-in infinite;
+        }
+
+        .heart::before, .heart::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background-color: #ff6f91;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 10px;
+            top: 0;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 100vh) rotate(-45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(0, -100vh) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+
+        .final-options {
+            margin-top: 30px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .final-options button {
+            margin: 10px;
+            position: relative;
+        }
+
+        .hidden-picture {
+            display: none;
+            margin-top: 20px;
+            width: 50%;
+            height: auto;
+            max-height: 50vh;
+            object-fit: contain;
+            border-radius: 15px;
+        }
+
+        .caption {
+            display: none;
+            font-size: 2rem;
+            color: #ff6f91;
+            margin-top: 10px;
+            font-family: 'Great Vibes', cursive;
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts">
+        <!-- Hearts will be dynamically added by JavaScript -->
+    </div>
+
+    <h1>Will you be my Valentine Bethany Terris?</h1>
+    <p>so, I set a list of reasons why you should say yes... <br>
+        in case you need convincing... 💋 </p>
+
+    <div class="button-container">
+        <button id="revealButton" class="btn" onclick="revealMessage()">click here</button>
+    </div>
+
+    <p id="hiddenMessage" class="hidden-message"></p>
+
+    <div class="final-options">
+        <button id="yesButton" class="btn" onclick="showPicture()">Yes 😻</button>
+        <button id="noButton" class="btn">No 😿</button>
+    </div>
+
+    <img id="hiddenPicture" class="hidden-picture" src="loveheart.jpg" alt="Our Picture">
+    <p id="caption" class="caption">I love you so much!</p>
+
+    <script>
+        const messages = [
+        "You're the prettiest woman in the universe",
+        "Even beyond particles and stuff that you know better than me",
+        "So yes your beauty is beyond that",
+        "I love your laugh",
+        "And I want to share many ones with you",
+        "I love your smile ❤️",
+        "And I want to see that beautiful smile...",
+        "Your presence makes my everything better",
+        "I love listening to your science",
+        "You're the smartest woman alive in my opinion", 
+        "You are my safety",
+        "Your eyes are the prettiest I've ever seen", 
+        "I could go on for ages honestly",
+        "You're the most good person I came accross and it shows daily",
+        "I am the most thankful to be with you",
+        "Another very valid reason: I am your lovely girlfriend",
+        "I am in love with you...",
+        "ok listen, no more reasons needed. You are just perfect ! so what's your final answer ? "
+        ];
+
+        let messageIndex = 0;
+
+        function revealMessage() {
+            const hiddenMessage = document.getElementById('hiddenMessage');
+            const revealButton = document.getElementById('revealButton');
+            const finalOptions = document.querySelector('.final-options');
+
+            if (messageIndex < messages.length) {
+                hiddenMessage.textContent = messages[messageIndex];
+                hiddenMessage.style.display = 'block';
+                messageIndex++;
+
+                if (messageIndex === messages.length) {
+                    revealButton.style.display = "none";
+                    finalOptions.style.display = "flex";
+                } else {
+                    revealButton.textContent = "click again <3";
+                }
+            }
+        }
+
+        const noButton = document.getElementById("noButton");
+
+        noButton.addEventListener("mouseover", function () {
+            const randomX = Math.random() * (window.innerWidth - 100);
+            const randomY = Math.random() * (window.innerHeight - 50);
+
+            noButton.style.position = "absolute";
+            noButton.style.left = `${randomX}px`;
+            noButton.style.top = `${randomY}px`;
+        });
+
+        function showPicture() {
+            const hiddenPicture = document.getElementById('hiddenPicture');
+            const caption = document.getElementById('caption');
+            const finalOptions = document.querySelector('.final-options');
+
+            hiddenPicture.style.display = 'block';
+            caption.style.display = 'block';
+            finalOptions.style.display = 'none';
+        }
+
+        // Function to create floating hearts
+        function createHearts() {
+            const heartsContainer = document.querySelector('.hearts');
+
+            for (let i = 0; i < 50; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+
+                const size = Math.random() * 20 + 10; // Random size
+                heart.style.width = `${size}px`;
+                heart.style.height = `${size}px`;
+
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.top = `${Math.random() * 100}vh`;
+                heart.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                heart.style.animationDelay = `${Math.random() * 5}s`;
+
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        // Start creating hearts
+        createHearts();
+    </script>
+</body>
+</html>
